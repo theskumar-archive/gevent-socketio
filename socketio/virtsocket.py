@@ -9,17 +9,16 @@ in a different way
 :moduleauthor: Alexandre Bourget <alexandre.bourget@savoirfairelinux.com>
 
 """
+import logging
 import random
 import weakref
-import logging
 
 import gevent
-from gevent.queue import Queue
 from gevent.event import Event
+from gevent.queue import Queue
 
 from socketio import packet
-from socketio.defaultjson import default_json_loads, default_json_dumps
-
+from socketio.defaultjson import default_json_dumps, default_json_loads
 
 log = logging.getLogger(__name__)
 

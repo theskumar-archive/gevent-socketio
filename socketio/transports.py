@@ -1,7 +1,8 @@
 import urllib
 import urlparse
-from geventwebsocket import WebSocketError
+
 from gevent.queue import Empty
+from geventwebsocket import WebSocketError
 
 
 class BaseTransport(object):

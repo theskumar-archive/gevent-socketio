@@ -1,8 +1,8 @@
 from unittest import TestCase, main
 
+from mock import MagicMock
 from socketio.namespace import BaseNamespace
 from socketio.virtsocket import Socket
-from mock import MagicMock
 
 
 class MockSocketIOServer(object):

@@ -1,14 +1,13 @@
 import sys
 import traceback
-
 from socket import error
 
 from gevent.pywsgi import WSGIServer
+from geventwebsocket.handler import WebSocketHandler
 
 from socketio.handler import SocketIOHandler
 from socketio.policyserver import FlashPolicyServer
 from socketio.virtsocket import Socket
-from geventwebsocket.handler import WebSocketHandler
 
 __all__ = ['SocketIOServer']
 

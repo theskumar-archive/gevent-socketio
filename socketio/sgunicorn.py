@@ -1,21 +1,18 @@
 import os
-import gevent
 import time
-
-from gevent.pool import Pool
-from gevent.server import StreamServer
-
-from gunicorn.workers.ggevent import GeventPyWSGIWorker
-from gunicorn.workers.ggevent import PyWSGIHandler
-from gunicorn.workers.ggevent import GeventResponse
-from gunicorn import version_info as gunicorn_version
-from socketio.server import SocketIOServer
-from socketio.handler import SocketIOHandler
-
-from geventwebsocket.handler import WebSocketHandler
-
 from datetime import datetime
 from functools import partial
+
+import gevent
+from gevent.pool import Pool
+from gevent.server import StreamServer
+from geventwebsocket.handler import WebSocketHandler
+
+from gunicorn import version_info as gunicorn_version
+from gunicorn.workers.ggevent import (GeventPyWSGIWorker, GeventResponse,
+                                      PyWSGIHandler)
+from socketio.handler import SocketIOHandler
+from socketio.server import SocketIOServer
 
 
 class GunicornWSGIHandler(PyWSGIHandler, SocketIOHandler):

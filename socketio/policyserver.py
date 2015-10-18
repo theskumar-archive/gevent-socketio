@@ -1,5 +1,6 @@
-from gevent.server import StreamServer
 import socket
+
+from gevent.server import StreamServer
 
 __all__ = ['FlashPolicyServer']
 

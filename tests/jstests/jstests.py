@@ -1,8 +1,8 @@
 from gevent import monkey
 
 from socketio import socketio_manage
-from socketio.server import SocketIOServer
 from socketio.namespace import BaseNamespace
+from socketio.server import SocketIOServer
 
 monkey.patch_all()
 

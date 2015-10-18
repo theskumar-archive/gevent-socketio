@@ -2,10 +2,10 @@
 Tests based on the Socket.IO spec: https://github.com/LearnBoost/socket.io-spec
 """
 
+import decimal
 from unittest import TestCase, main
 
-from socketio.packet import encode, decode
-import decimal
+from socketio.packet import decode, encode
 
 
 class TestEncodeMessage(TestCase):

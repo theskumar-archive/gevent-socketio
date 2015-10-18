@@ -1,7 +1,8 @@
-import gevent
-import re
-import logging
 import inspect
+import logging
+import re
+
+import gevent
 
 log = logging.getLogger(__name__)
 

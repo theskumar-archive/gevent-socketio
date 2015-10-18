@@ -1,9 +1,10 @@
-import sys
 import re
-import gevent
+import sys
 import urlparse
 
+import gevent
 from gevent.pywsgi import WSGIHandler
+
 from socketio import transports
 
 
