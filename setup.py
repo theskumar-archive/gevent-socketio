@@ -17,10 +17,9 @@ class PyTest(TestCommand):
 
 setup(
     name="gevent-socketio",
-    version="0.3.6",
-    description=(
-        "SocketIO server based on the Gevent pywsgi server, "
-        "a Python network library"),
+    version="0.4.0rc0",
+    description=("SocketIO server based on the Gevent pywsgi server, "
+                 "a Python network library"),
     author="Jeffrey Gelens",
     author_email="jeffrey@noppo.pro",
     maintainer="Alexandre Bourget",
@@ -28,7 +27,7 @@ setup(
     license="BSD",
     url="https://github.com/abourget/gevent-socketio",
     download_url="https://github.com/abourget/gevent-socketio",
-    install_requires=("gevent", "gevent-websocket",),
+    install_requires=("gevent-websocket", "gevent", ),
     setup_requires=('versiontools >= 1.7'),
     cmdclass={'test': PyTest},
     tests_require=['pytest', 'mock'],
