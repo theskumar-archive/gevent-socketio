@@ -1,9 +1,10 @@
-from gevent import monkey; monkey.patch_all()
+from gevent import monkey
 
 from socketio import socketio_manage
 from socketio.server import SocketIOServer
 from socketio.namespace import BaseNamespace
 
+monkey.patch_all()
 
 TestHtml = """
 <!DOCTYPE html>
@@ -23,6 +24,7 @@ TestHtml = """
 </html>
 """
 
+
 class TestNamespace(BaseNamespace):
     def on_requestack(self, val):
         return val, "ack"
@@ -30,10 +32,11 @@ class TestNamespace(BaseNamespace):
     def on_requestackonevalue(self, val):
         return val
 
+
 class Application(object):
     def __init__(self):
         self.buffer = []
-        
+
     def __call__(self, environ, start_response):
         path = environ['PATH_INFO'].strip('/')
 

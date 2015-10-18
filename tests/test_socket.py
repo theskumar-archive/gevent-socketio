@@ -49,7 +49,7 @@ class TestSocketAPI(TestCase):
     def test_connected_property(self):
         # not connected
         self.assertFalse(self.virtsocket.connected)
-        
+
         # connected
         self.virtsocket.state = "CONNECTED"
         self.assertTrue(self.virtsocket.connected)
@@ -65,7 +65,7 @@ class TestSocketAPI(TestCase):
     def test_disconnect(self):
         # kill connected socket
         self.virtsocket.state = "CONNECTED"
-        self.virtsocket.active_ns = {'test' : MockNamespace({'socketio': self.virtsocket}, 'test')}
+        self.virtsocket.active_ns = {'test': MockNamespace({'socketio': self.virtsocket}, 'test')}
         self.virtsocket.disconnect()
         self.assertEqual(self.virtsocket.state, "DISCONNECTING")
         self.assertEqual(self.virtsocket.active_ns, {})
@@ -73,7 +73,7 @@ class TestSocketAPI(TestCase):
     def test_kill(self):
         # kill connected socket
         self.virtsocket.state = "CONNECTED"
-        self.virtsocket.active_ns = {'test' : MockNamespace({'socketio': self.virtsocket}, 'test')}
+        self.virtsocket.active_ns = {'test': MockNamespace({'socketio': self.virtsocket}, 'test')}
         self.virtsocket.kill()
         self.assertEqual(self.virtsocket.state, "DISCONNECTING")
 

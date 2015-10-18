@@ -6,6 +6,7 @@ import urlparse
 from gevent.pywsgi import WSGIHandler
 from socketio import transports
 
+
 class SocketIOHandler(WSGIHandler):
     RE_REQUEST_URL = re.compile(r"""
         ^/(?P<resource>.+?)
@@ -50,7 +51,7 @@ class SocketIOHandler(WSGIHandler):
             self.transports = self.server.transports
             if not set(self.transports).issubset(set(self.handler_types)):
                 raise ValueError("transports should be elements of: %s" %
-                    (self.handler_types.keys()))
+                                 (self.handler_types.keys()))
 
     def _do_handshake(self, tokens):
         if tokens["resource"] != self.server.resource:
@@ -135,8 +136,9 @@ class SocketIOHandler(WSGIHandler):
         socket = self.server.get_socket(sessid)
         if not socket:
             self.handle_bad_request()
-            return []  # Do not say the session is not found, just bad request
-                       # so they don't start brute forcing to find open sessions
+            # Do not say the session is not found, just bad request
+            # so they don't start brute forcing to find open sessions
+            return []
 
         if self.environ['QUERY_STRING'].startswith('disconnect'):
             # according to socket.io specs disconnect requests
@@ -182,7 +184,7 @@ class SocketIOHandler(WSGIHandler):
                 if socket.wsgi_app_greenlet is None:
                     # TODO: why don't we spawn a call to handle_one_response here ?
                     #       why call directly the WSGI machinery ?
-                    start_response = lambda status, headers, exc=None: None
+                    start_response = lambda status, headers, exc=None: None  # noqa
                     socket.wsgi_app_greenlet = gevent.spawn(self.application,
                                                             self.environ,
                                                             start_response)
@@ -214,7 +216,6 @@ class SocketIOHandler(WSGIHandler):
             ('Connection', 'close'),
             ('Content-Length', 0)
         ])
-
 
     def handle_disconnect_request(self):
         self.close_connection = True

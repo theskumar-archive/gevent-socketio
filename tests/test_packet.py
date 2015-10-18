@@ -7,6 +7,7 @@ from unittest import TestCase, main
 from socketio.packet import encode, decode
 import decimal
 
+
 class TestEncodeMessage(TestCase):
 
     def test_encode_disconnect(self):
@@ -40,7 +41,7 @@ class TestEncodeMessage(TestCase):
         self.assertEqual(encoded_message, '2::')
 
     def test_encode_message(self):
-        """encoding a message packet """        
+        """encoding a message packet """
         encoded_message = encode({'type': 'message',
                                   'endpoint': '',
                                   'data': 'woot'
@@ -69,7 +70,7 @@ class TestEncodeMessage(TestCase):
                                   'id': 1,
                                   'ack': 'data',
                                   'endpoint': '',
-                                  'data': {'a' : 'b'}
+                                  'data': {'a': 'b'}
                                   })
         self.assertEqual(encoded_message, '4:1+::{"a":"b"}')
 
@@ -80,10 +81,9 @@ class TestEncodeMessage(TestCase):
                                   'id': 1,
                                   'ack': 'data',
                                   'endpoint': '',
-                                  'data': {'a' : decimal.Decimal('%0.1f' % (0.5))}
+                                  'data': {'a': decimal.Decimal('%0.1f' % (0.5))}
                                   })
         self.assertEqual(encoded_message, '4:1+::{"a":0.5}')
-
 
     def test_encode_event(self):
         """encoding an event packet """
@@ -117,15 +117,15 @@ class TestEncodeMessage(TestCase):
                                   'name': 'edwald',
                                   'ack': True,
                                   'endpoint': '',
-                                  'args': [{"a":"b"}, 2,"3"]
+                                  'args': [{"a": "b"}, 2, "3"]
                                   })
         self.assertEqual(encoded_message,
-                          '5:::{"args":[{"a":"b"},2,"3"],"name":"edwald"}')
+                         '5:::{"args":[{"a":"b"},2,"3"],"name":"edwald"}')
 
     def test_encode_ack(self):
         """encoding ack packet """
         encoded_message = encode({'type': 'ack',
-                                              'ackId': 140,
+                                  'ackId': 140,
                                   'endpoint': '',
                                   'args': []
                                   })
@@ -135,7 +135,7 @@ class TestEncodeMessage(TestCase):
         encoded_message = encode({'type': 'ack',
                                   'ackId': 12,
                                   'endpoint': '',
-                                  'args': ["woot","wa"]
+                                  'args': ["woot", "wa"]
                                   })
         self.assertEqual(encoded_message, '6:::12+["woot","wa"]')
 
@@ -143,7 +143,7 @@ class TestEncodeMessage(TestCase):
         encoded_message = encode({'type': 'ack',
                                   'ackId': 12,
                                   'endpoint': '/chat',
-                                  'args': ["woot","wa"]
+                                  'args': ["woot", "wa"]
                                   })
         self.assertEqual(encoded_message, '6::/chat:12+["woot","wa"]')
 
@@ -190,14 +190,14 @@ class TestEncodeMessage(TestCase):
 
 
 class TestDecodeMessage(TestCase):
-    
+
     def test_decode_deconnect(self):
         """decoding a disconnection packet """
         decoded_message = decode('0::/woot')
         self.assertEqual(decoded_message, {'type': 'disconnect',
                                            'endpoint': '/woot'
                                            })
-        
+
     def test_decode_connect(self):
         """decoding a connection packet """
         decoded_message = decode('1::/tobi')
@@ -249,6 +249,7 @@ class TestDecodeMessage(TestCase):
                                            'endpoint': '',
                                            'ack': 'data',
                                            'data': {u'a': u'b'}})
+
     def test_decode_event(self):
         """decoding an event packet """
         decoded_message = decode('5:::{"name":"woot", "args": ["foo"]}')
@@ -276,7 +277,7 @@ class TestDecodeMessage(TestCase):
         """decoding an event packet """
         decoded_message = decode('5:::')
         self.assertEqual(decoded_message, {'args': [],
-                                            'type': 'event',
+                                           'type': 'event',
                                            'endpoint': '',
                                            })
 
@@ -287,7 +288,7 @@ class TestDecodeMessage(TestCase):
                                            'ackId': 140,
                                            'endpoint': '',
                                            'args': []})
-        
+
         # Decode with endpoint
         decoded_message = decode('6::/chat:140')
         self.assertEqual(decoded_message, {'type': 'ack',
@@ -341,8 +342,8 @@ class TestDecodeMessage(TestCase):
         """decoding a noop packet """
         decoded_message = decode('8::')
         self.assertEqual(decoded_message, {'type': 'noop',
-                                            'endpoint': ''
-                                            })
+                                           'endpoint': ''
+                                           })
 
     def test_except_on_invalid_message_type(self):
         """decoding a noop packet """
@@ -352,6 +353,6 @@ class TestDecodeMessage(TestCase):
             self.assertEqual(e.message, "Unknown message type: 99")
         else:
             self.assertEqual(decoded_message, None,
-                    "We should not get a valid message")
+                             "We should not get a valid message")
 if __name__ == '__main__':
     main()

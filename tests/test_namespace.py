@@ -4,8 +4,11 @@ from socketio.namespace import BaseNamespace
 from socketio.virtsocket import Socket
 from mock import MagicMock
 
+
 class MockSocketIOServer(object):
+
     """Mock a SocketIO server"""
+
     def __init__(self, *args, **kwargs):
         self.sockets = {}
 
@@ -16,7 +19,9 @@ class MockSocketIOServer(object):
 class MockSocket(Socket):
     pass
 
+
 class ChatNamespace(BaseNamespace):
+
     def __init__(self, *args, **kwargs):
         self.use_set = args[0]
 
@@ -25,7 +30,7 @@ class ChatNamespace(BaseNamespace):
     def get_initial_acl(self):
         acls = ['on_foo']
 
-        if self.use_set == True:
+        if self.use_set is True:
             return set(acls)
         else:
             return acls
@@ -39,14 +44,18 @@ class ChatNamespace(BaseNamespace):
     def on_baz(foo, bar, baz):
         return 'c'
 
+
 class GlobalNamespace(BaseNamespace):
+
     def on_woot(self):
         return ''
 
     def on_tobi(self):
         return ''
 
+
 class TestBaseNamespace(TestCase):
+
     def setUp(self):
         server = MockSocketIOServer()
         self.environ = {}
@@ -197,9 +206,9 @@ class TestBaseNamespace(TestCase):
                'endpoint': '/chat',
                'args': []}
 
-        message =  ("Trying to delete an ACL method, but none were"
-                + " defined yet! Or: No ACL restrictions yet, why would you"
-                + " delete one?")
+        message = ("Trying to delete an ACL method, but none were"
+                   + " defined yet! Or: No ACL restrictions yet, why would you"
+                   + " delete one?")
         try:
             self.ns.del_acl_method('on_foo')
             self.ns.process_packet(pkt)
@@ -249,7 +258,9 @@ class TestBaseNamespace(TestCase):
             **kwargs
         )
 
+
 class TestChatNamespace(TestCase):
+
     def setUp(self):
         server = MockSocketIOServer()
         self.environ = {}
@@ -278,15 +289,15 @@ class TestChatNamespace(TestCase):
 
         self.ns.process_packet(pkt)
 
-        args = [ 
-                'method_access_denied',
-                'You do not have access to method "on_bar"',
+        args = [
+            'method_access_denied',
+            'You do not have access to method "on_bar"',
         ]
 
-        kwargs = dict( 
-                msg_id=None,
-                endpoint='/chat',
-                quiet=False
+        kwargs = dict(
+            msg_id=None,
+            endpoint='/chat',
+            quiet=False
         )
 
         self.environ['socketio'].error.assert_called_with(*args, **kwargs)
@@ -313,24 +324,24 @@ class TestChatNamespace(TestCase):
 
         self.ns.process_packet(pkt)
 
-        args = [ 
-                'method_access_denied',
-                'You do not have access to method "on_foo"',
+        args = [
+            'method_access_denied',
+            'You do not have access to method "on_foo"',
         ]
 
         kwargs = dict(
-                msg_id=None,
-                endpoint='/chat',
-                quiet=False
+            msg_id=None,
+            endpoint='/chat',
+            quiet=False
         )
 
         self.environ['socketio'].error.assert_called_with(*args, **kwargs)
 
     def test_lift_acl_restrictions(self):
         pkt1 = {'type': 'event',
-               'name': 'foo',
-               'endpoint': '/chat',
-               'args': []}
+                'name': 'foo',
+                'endpoint': '/chat',
+                'args': []}
 
         self.ns.lift_acl_restrictions()
 
@@ -339,9 +350,9 @@ class TestChatNamespace(TestCase):
         assert not self.environ['socketio'].error.called
 
         pkt2 = {'type': 'event',
-               'name': 'bar',
-               'endpoint': '/chat',
-               'args': []}
+                'name': 'bar',
+                'endpoint': '/chat',
+                'args': []}
 
         self.ns.process_packet(pkt2)
 
@@ -378,8 +389,7 @@ class TestChatNamespace(TestCase):
         self.environ['socketio'].error.assert_called_with(
             "invalid_method_args",
             "The server-side method is invalid, as it doesn't "
-            "have 'self' as its first argument"
-        , **kwargs)
+            "have 'self' as its first argument", **kwargs)
 
 if __name__ == '__main__':
     main()

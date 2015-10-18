@@ -23,18 +23,19 @@ class GunicornWSGIHandler(PyWSGIHandler, SocketIOHandler):
 
 
 class GunicornWebSocketWSGIHandler(WebSocketHandler):
+
     def log_request(self):
-            start = datetime.fromtimestamp(self.time_start)
-            finish = datetime.fromtimestamp(self.time_finish)
-            response_time = finish - start
-            resp = GeventResponse(self.status, [],
-                                  self.response_length)
-            req_headers = [h.split(":", 1) for h in self.headers.headers]
-            self.server.log.access(
-                resp, req_headers, self.environ, response_time)
+        start = datetime.fromtimestamp(self.time_start)
+        finish = datetime.fromtimestamp(self.time_finish)
+        response_time = finish - start
+        resp = GeventResponse(self.status, [],
+                              self.response_length)
+        req_headers = [h.split(":", 1) for h in self.headers.headers]
+        self.server.log.access(resp, req_headers, self.environ, response_time)
 
 
 class GeventSocketIOBaseWorker(GeventPyWSGIWorker):
+
     """ The base gunicorn worker class """
 
     transports = None
@@ -81,8 +82,7 @@ class GeventSocketIOBaseWorker(GeventPyWSGIWorker):
                     )
                 else:
                     hfun = partial(self.handle, s)
-                    server = StreamServer(
-                        s, handle=hfun, spawn=pool, **ssl_args)
+                    server = StreamServer(s, handle=hfun, spawn=pool, **ssl_args)
 
                 server.start()
                 servers.append(server)
@@ -104,14 +104,14 @@ class GeventSocketIOBaseWorker(GeventPyWSGIWorker):
 
             try:
                 # Stop accepting requests
-                [server.stop_accepting() for server in servers]
+                [_server.stop_accepting() for _server in servers]
 
                 # Handle current requests until graceful_timeout
                 ts = time.time()
                 while time.time() - ts <= self.cfg.graceful_timeout:
                     accepting = 0
-                    for server in servers:
-                        if server.pool.free_count() != server.pool.size:
+                    for _server in servers:
+                        if _server.pool.free_count() != _server.pool.size:
                             accepting += 1
 
                     if not accepting:
@@ -122,7 +122,7 @@ class GeventSocketIOBaseWorker(GeventPyWSGIWorker):
 
                 # Force kill all active the handlers
                 self.log.warning("Worker graceful timeout (pid:%s)" % self.pid)
-                [server.stop(timeout=1) for server in servers]
+                [_server.stop(timeout=1) for _server in servers]
             except:
                 pass
         else:
@@ -180,6 +180,7 @@ class GeventSocketIOBaseWorker(GeventPyWSGIWorker):
 
 
 class GeventSocketIOWorker(GeventSocketIOBaseWorker):
+
     """
     Default gunicorn worker utilizing gevent
 
@@ -197,6 +198,7 @@ class GeventSocketIOWorker(GeventSocketIOBaseWorker):
 
 
 class NginxGeventSocketIOWorker(GeventSocketIOWorker):
+
     """
     Worker which will not attempt to connect via websocket transport
 

@@ -20,10 +20,12 @@ use the -c option to specify an alternate configuration file.
 
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
-
 from optparse import OptionParser
+
+import zc.buildout.buildout
 
 tmpeggs = tempfile.mkdtemp()
 
@@ -35,7 +37,7 @@ Bootstraps a buildout-based project.
 Simply run this script in a directory containing a buildout.cfg, using the
 Python that you want bin/buildout to use.
 
-Note that by using --find-links to point to local resources, you can keep 
+Note that by using --find-links to point to local resources, you can keep
 this script from going over the network.
 '''
 
@@ -76,8 +78,7 @@ except ImportError:
         from urllib2 import urlopen
 
     # XXX use a more permanent ez_setup.py URL when available.
-    exec(urlopen('https://bitbucket.org/pypa/setuptools/raw/0.7.2/ez_setup.py'
-                ).read(), ez)
+    exec(urlopen('https://bitbucket.org/pypa/setuptools/raw/0.7.2/ez_setup.py').read(), ez)
     setup_args = dict(to_dir=tmpeggs, download_delay=0)
     ez['use_setuptools'](**setup_args)
 
@@ -146,7 +147,6 @@ if version:
     requirement = '=='.join((requirement, version))
 cmd.append(requirement)
 
-import subprocess
 if subprocess.call(cmd, env=dict(os.environ, PYTHONPATH=setuptools_path)) != 0:
     raise Exception(
         "Failed to execute command:\n%s",
@@ -157,7 +157,6 @@ if subprocess.call(cmd, env=dict(os.environ, PYTHONPATH=setuptools_path)) != 0:
 
 ws.add_entry(tmpeggs)
 ws.require(requirement)
-import zc.buildout.buildout
 
 if not [a for a in args if '=' not in a]:
     args.append('bootstrap')

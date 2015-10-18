@@ -1,4 +1,3 @@
-import gevent
 import urllib
 import urlparse
 from geventwebsocket import WebSocketError
@@ -297,7 +296,6 @@ class HTMLFileTransport(XHRPollingTransport):
         ])
         self.write("<html><body><script>var _ = function (msg) { parent.s._(msg, document); };</script>")
         self.write_packed("1::")  # 'connect' packet
-
 
         def chunk():
             while True:

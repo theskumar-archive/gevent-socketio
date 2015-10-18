@@ -14,6 +14,7 @@ __all__ = ['SocketIOServer']
 
 
 class SocketIOServer(WSGIServer):
+
     """A WSGI Server with a resource that acts like an SocketIO."""
 
     def __init__(self, *args, **kwargs):
@@ -85,11 +86,10 @@ class SocketIOServer(WSGIServer):
             if f in kwargs:
                 self.config[f] = int(kwargs.pop(f))
 
-        if not 'handler_class' in kwargs:
+        if 'handler_class' not in kwargs:
             kwargs['handler_class'] = SocketIOHandler
 
-
-        if not 'ws_handler_class' in kwargs:
+        if 'ws_handler_class' not in kwargs:
             self.ws_handler_class = WebSocketHandler
         else:
             self.ws_handler_class = kwargs.pop('ws_handler_class')
@@ -142,7 +142,7 @@ class SocketIOServer(WSGIServer):
 def serve(app, **kw):
     _quiet = kw.pop('_quiet', False)
     _resource = kw.pop('resource', 'socket.io')
-    if not _quiet: # pragma: no cover
+    if not _quiet:  # pragma: no cover
         # idempotent if logging has already been set up
         import logging
         logging.basicConfig()

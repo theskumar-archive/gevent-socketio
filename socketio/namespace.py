@@ -30,7 +30,7 @@ class BaseNamespace(object):
     Handlers are automatically dispatched based on the name of the incoming
     event. For example, a 'user message' event will be handled by
     ``on_user_message()``. To change this, override :meth:`process_event`.
-    
+
     We can also access the full packet directly by making an event handler
     that accepts a single argument named 'packet':
 
@@ -268,8 +268,8 @@ class BaseNamespace(object):
         func_args = specs.args
         if not len(func_args) or func_args[0] != 'self':
             self.error("invalid_method_args",
-                "The server-side method is invalid, as it doesn't "
-                "have 'self' as its first argument")
+                       "The server-side method is invalid, as it doesn't "
+                       "have 'self' as its first argument")
             return
 
         # Check if we need to decorate to handle exceptions
@@ -297,7 +297,8 @@ class BaseNamespace(object):
         the variables you're going to use in the events handled by this
         namespace, setup ACLs, etc..
 
-        This method is called on all base classes following the _`method resolution order <http://docs.python.org/library/stdtypes.html?highlight=mro#class.__mro__>`
+        This method is called on all base classes following the _`method
+        resolution order <http://docs.python.org/library/stdtypes.html?highlight=mro#class.__mro__>`
         so you don't need to call super() to initialize the mixins or
         other derived classes.
 
