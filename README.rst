@@ -1,7 +1,7 @@
 Presentation
 ============
 
-.. image:: https://secure.travis-ci.org/abourget/gevent-socketio.png?branch=master
+.. image:: https://api.travis-ci.org/theskumar/gevent-socketio.svg?branch=dev
 
 ``gevent-socketio`` is a Python implementation of the Socket.IO
 protocol, developed originally for Node.js by LearnBoost and then
@@ -67,4 +67,3 @@ If you want to do all of that in a virtualenv, run::
    virtualenv env
    . env/bin/activate
    python setup.py develop   # or install
-
