@@ -10,11 +10,12 @@ gen/
 
 # Ignore built docs..
 docs/build
+.cache/
 
 *.py[co]
 
 # Packages
-*.egg
+.eggs/*
 *.egg-info
 dist
 build
