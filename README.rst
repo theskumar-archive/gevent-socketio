@@ -2,6 +2,11 @@ Presentation
 ============
 
 .. image:: https://api.travis-ci.org/theskumar/gevent-socketio.svg?branch=dev
+  :target: https://travis-ci.org/theskumar/gevent-socketio
+
+.. image:: https://coveralls.io/repos/theskumar/gevent-socketio/badge.svg?branch=dev&service=github
+  :target: https://coveralls.io/github/theskumar/gevent-socketio?branch=dev
+
 
 ``gevent-socketio`` is a Python implementation of the Socket.IO
 protocol, developed originally for Node.js by LearnBoost and then
@@ -37,12 +42,11 @@ Discussion and questions happen on the mailing list:
 
 or in the Github issue tracking:
 
-* https://github.com/abourget/gevent-socketio/issues
+* https://github.com/theskumar/gevent-socketio/issues
 
 You can also contact the maintainer:
 
-* https://twitter.com/#!/bourgetalexndre
-* https://plus.google.com/109333785244622657612
+* https://twitter.com/_theskumar
 
 
 Installation
@@ -50,11 +54,11 @@ Installation
 
 You can install with standard Python methods::
 
-   pip install gevent-socketio
+   pip install gevent-socketio-redux
 
 or from source::
 
-   git clone git://github.com/abourget/gevent-socketio.git
+   git clone git://github.com/theskumar/gevent-socketio.git
    cd gevent-socketio
    python setup.py install
 

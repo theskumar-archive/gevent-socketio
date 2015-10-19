@@ -51,3 +51,4 @@ nohup.out
 .project
 .pydevproject
 .idea/
+htmlcov/
