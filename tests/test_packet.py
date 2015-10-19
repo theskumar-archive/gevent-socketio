@@ -119,8 +119,8 @@ class TestEncodeMessage(TestCase):
                                   'endpoint': '',
                                   'args': [{"a": "b"}, 2, "3"]
                                   })
-        self.assertEqual(encoded_message,
-                         '5:::{"args":[{"a":"b"},2,"3"],"name":"edwald"}')
+        assert encoded_message == '5:::{"args":[{"a":"b"},2,"3"],"name":"edwald"}' or \
+            encoded_message == '5:::{"name":"edwald","args":[{"a":"b"},2,"3"]}'
 
     def test_encode_ack(self):
         """encoding ack packet """
