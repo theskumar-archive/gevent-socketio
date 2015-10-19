@@ -1,15 +1,19 @@
 import logging
 
 from django.http import HttpResponse
-from django.utils.importlib import import_module
 from django.views.decorators.csrf import csrf_exempt
 from socketio import socketio_manage
 
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
+
 # for Django 1.3 support
 try:
-    from django.conf.urls import patterns, url, include
+    from django.conf.urls import patterns
 except ImportError:
-    from django.conf.urls.defaults import patterns, url, include  # noqa
+    from django.conf.urls.defaults import patterns
 
 
 SOCKETIO_NS = {}
