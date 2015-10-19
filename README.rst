@@ -54,7 +54,7 @@ Installation
 
 You can install with standard Python methods::
 
-   pip install gevent-socketio-redux
+   pip install https://github.com/theskumar/gevent-socketio/archive/dev.zip
 
 or from source::
 
@@ -68,6 +68,10 @@ For development, run instead of ``install``::
 
 If you want to do all of that in a virtualenv, run::
 
-   virtualenv env
-   . env/bin/activate
+   virtualenv venv
+   source venv/bin/activate
    python setup.py develop   # or install
+
+License
+=======
+BSD
