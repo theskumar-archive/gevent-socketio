@@ -1,13 +1,14 @@
 import sys
 import traceback
+
 from socket import error
 
 from gevent.pywsgi import WSGIServer
-from geventwebsocket.handler import WebSocketHandler
 
 from socketio.handler import SocketIOHandler
 from socketio.policyserver import FlashPolicyServer
 from socketio.virtsocket import Socket
+from geventwebsocket.handler import WebSocketHandler
 
 __all__ = ['SocketIOServer']
 
@@ -63,13 +64,17 @@ class SocketIOServer(WSGIServer):
         self.transports = kwargs.pop('transports', None)
 
         if kwargs.pop('policy_server', True):
+            wsock = args[0]
             try:
-                address = args[0][0]
-            except TypeError:
+                address, port = wsock.getsockname()
+            except AttributeError:
                 try:
-                    address = args[0].address[0]
-                except AttributeError:
-                    address = args[0].cfg_addr[0]
+                    address = wsock[0]
+                except TypeError:
+                    try:
+                        address = wsock.address[0]
+                    except AttributeError:
+                        address = wsock.cfg_addr[0]
             policylistener = kwargs.pop('policy_listener', (address, 10843))
             self.policy_server = FlashPolicyServer(policylistener)
         else:
